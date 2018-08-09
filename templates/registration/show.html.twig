@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+    {#<img src='uploads/images/labmk_logo.jpg' alt="logo" />#}
+    <h1>Entry to show</h1>
+    <div class="table-responsive">
+        <table class="table">
+        <thead>
+        <tr>
+            <th>Registration Id</th>
+            <th>Show date</th>
+            <th>Show Location</th>
+            <th>In catalogue</th>
+            <th>Registration date</th>
+            <th>Class in show</th>
+            <th>Competition in show</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ registration.id }}</td>
+                <td>{{ registration.show.dateShow ? registration.show.dateShow|date('Y-m-d') : ''}}</td>
+                <td>{{ registration.show.city }}, {{ registration.show.country }}</td>
+                <td>{{ registration.inCatalogue ? 'Yes':'No'  }}</td>
+                <td>{{ registration.createdAt ? registration.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                {% if registration.class.classTitle is defined %}
+                <td>{{ registration.class.classTitle }}</td>
+                {% else %}<td>Not available</td>
+                {% endif %}
+                <td>{% for competition in registration.competitions  %}
+                  {{ competition.competitionTitle }}
+                {% endfor %}
+                </td>
+            </tr>
+            </tbody>
+    </table>
+    </div>
+
+    <table class="table" id="registration-dog-info">
+        <tr>
+            <th>Dog's name</th>
+            <td>{{ registration.dog.registeredName | capitalize}}</td>
+        </tr>
+        <tr>
+           <th>Dog's pedigree number</th>
+            <td>{{ registration.dog.pedigreeRegNo}}</td>
+        </tr>
+        <tr>
+            <th>Dog's sex</th>
+            <td>{{ registration.dog.sex }}</td>
+        </tr>
+        <tr>
+            <th>Color</th>
+            <td>{{ registration.dog.color }}</td>
+        </tr>
+        <tr>
+            <th>Date of birth</th>
+            <td>{{ registration.dog.dateOfBirth ? registration.dog.dateOfBirth|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+        <th>Titles</th>
+        <td>
+            {% for title in registration.dog.titles %}
+                {{ title.name }}
+            {% endfor %}
+        </td>
+        </tr>
+        <tr>
+            <th>Chip/tattoo No.</th>
+            <td>{{ registration.dog.chipTattooNo }}</td>
+        </tr>
+        <tr>
+            <th>Sire</th>
+            <td>{{ registration.dog.sire | capitalize}}</td>
+        </tr>
+        <tr>
+            <th>Dam</th>
+            <td>{{ registration.dog.dam | capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Breeder</th>
+            <td>{{ registration.dog.breeder | capitalize }}</td>
+        </tr>
+        {% if registration.dog.nameOfClub is defined %}
+        <tr>
+            <th>Name of the club</th>
+            <td>{{ registration.dog.nameOfClub | capitalize }}</td>
+        </tr>
+        {% endif %}
+    </table>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Owner Name and Surname</th>
+            <th>Phone</th>
+            <th>E-mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ registration.dog.owner.name | capitalize}} {{ registration.dog.owner.surname | capitalize }} </td>
+            <td>{{ registration.dog.owner.phone}}</td>
+            {% if registration.dog.owner.user.email is defined %}
+            <td>{{ registration.dog.owner.user.email }}</td>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <hr>
+    {% for file in registration.files %}
+        <td><a href="{{ asset('uploads/images/' ~ file.fileName) }}">View file(s)</a></td>
+        <td>{{ file.title }}</td>
+    {% endfor %}
+        {% if is_granted('ROLE_ADMIN') %}
+    <hr>
+    <a href="{{ path('registration_index') }}">Go to registrations index</a>
+        {% endif %}
+    <hr>
+        <a href="{{ path('member_registration_index') }}">View your registrations</a>
+    <hr>
+    <a href="{{ path('registration_edit', {'id': registration.id}) }}">Edit regsitration</a>
+
+    <hr>
+        <a href="{{ path('pdf_example', {'id': registration.id}) }}">Generate pdf</a>
+    <hr>
+
+    {{ include('registration/_delete_form.html.twig') }}
+
+</div>
+
+{% endblock %}

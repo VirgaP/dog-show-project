@@ -1,0 +1,15 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        # the value is the service's id
+        pending_registrations: '@App\Repository\RegistrationRepository'
+#    form_themes: ['bootstrap_4_horizontal_layout.html.twig']
+    form_themes:
+        # Bootstrap:
+#        - bootstrap_4_layout.html.twig
+#         - 'form/fields.html.twig'
+        - bootstrap_4_horizontal_layout.html.twig
+        # Foundation
+#        - foundation_5_layout.html.twig

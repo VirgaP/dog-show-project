@@ -1,0 +1,97 @@
+//@import "~bootstrap/scss/bootstrap"; //4 bootsrap
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "~foundation/scss/foundation";
+//@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+//@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "./style.css";
+
+//#dog_sex {
+//  width: 25%!important;
+//  padding-left: 10px!important;
+//
+//}
+html,
+body {
+  height: 100%;
+  margin-bottom: 20px;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300; }
+
+
+@media only screen and (max-width: 600px) {
+  .registration-index {
+    font-size: 60% !important;
+  }
+  .dog-index {
+    font-size: 45%;
+  }
+  .dog-index h1 {
+    font-size: 18px;
+  }
+  .dog-index p {
+    font-size: 12px;
+  }
+;
+}
+
+@media only screen and (min-width: 600px) {
+  .registration-index {
+    font-size: 50%;
+  }
+}
+
+
+@media (min-width: 768px) {
+  html,
+  body {
+    //height: 1000px;
+    max-height: 100%;
+  }
+  .records_list {
+    font-size: x-large;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+
+}
+
+@media (min-width: 1024px) and (max-width: 1336px) {
+  html,
+  body {
+    //height: 650px;
+    max-height: 100%;
+  }
+  .records_list {
+    font-size: xx-large;
+  }
+  .registration-index {
+    font-size: 14px;
+  }
+
+}
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body {
+    //height: 650px;
+    max-height: 100%;
+  }
+}
+@media (min-width: 360px) and (max-width: 736px) {
+  html,
+  body {
+    //height: 650px;
+    max-height: 100%;
+  }
+
+  .records_list {
+    font-size: medium;
+
+  }
+
+}
+
+

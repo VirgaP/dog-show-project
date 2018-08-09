@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Dog{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+    <h1>Edit information on {{ dog.registeredName |capitalize }}</h1>
+
+    {{ include('dog/_form.html.twig', {'button_label': 'Update'}) }}
+        {% if is_granted ('ROLE_ADMIN') %}
+    <a href="{{ path('dog_index') }}">Back to dog list</a>
+        {% endif %}
+
+    {{ include('dog/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

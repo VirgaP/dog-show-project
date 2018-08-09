@@ -1,0 +1,15 @@
+{% block subject 'Registration Mail' %}
+
+{% block html_content %}
+
+    <h1>Sveiki, {{ app.user }}!</h1><br>
+    Your entry to show has been confirmed. /
+    Jūsų registracija į parodą patvritinta.
+    {#{% for registration in registrations %}#}
+    Your entry to show has been confirmed. /
+    {#Jūsų registracija į parodą {{ app.user.owner.dog.registration.show.placeAndTime }}#}
+{#{% endfor %}#}
+
+{% endblock %}
+
+

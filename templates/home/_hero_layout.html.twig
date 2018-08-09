@@ -1,0 +1,30 @@
+<!--begin home section -->
+{#<section class="home-section" id="home_wrapper" style="background-image:url({{asset('uploads/images/' ~ 'background.png')}}); background-repeat: no-repeat; background-size: cover; background-position:center; max-width:100%;">#}
+    <section class="home-section" id="home_wrapper" style="background-image:url({{asset('build/images/background.15202f24.png')}}); background-repeat: no-repeat; background-size: cover; background-position:center; max-width:100%;">
+
+    <div class="home-section-overlay"></div>
+
+    <!--begin container -->
+    <div class="container">
+
+<!--begin row -->
+<div class="row">
+
+    <!--begin col-md-6-->
+    {#<div class="col-md-6">#}
+    <div class="col-xs-12"
+        <div id="hero-text-box">
+                <h1>{{ home[0].heading | raw }}</h1>
+                <p>{{ home[0].text | raw }}</p>
+        </div>
+    </div>
+    <!--end col-md-6-->
+
+</div>
+<!--end row -->
+
+</div>
+<!--end container -->
+
+</section>
+<!--end home section -->

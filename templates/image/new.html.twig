@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Image{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>Upload new file</h1>
+
+    {{ include('image/_form.html.twig') }}
+
+    <a href="{{ path('file_index') }}">back to list</a>
+    </div>
+
+{% endblock %}

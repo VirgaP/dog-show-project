@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage create{% endblock %}
+{% block navbar %} {% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <h1>Enter homepage information</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('home') }}">Back to homepage</a>
+    </div>
+{% endblock %}

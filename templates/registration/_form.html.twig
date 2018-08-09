@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+{{  form_row(form.show) }}
+{{  form_row(form.dog) }}
+{{ form_errors(form.dog) }}
+{{ form_row(form.class) }}
+{{  form_row(form.competitions) }}
+{{ form_row(form.inCatalogue) }}
+
+<hr>
+{{ form_label(form.files) }}
+{% for file in registration.files %}
+    <td><a href="{{ asset('uploads/images/' ~ file.fileName) }}">View file(s)</a></td>
+    <td>{{ file.title }}</td>
+{% endfor %}
+
+    {#store the prototype on the data-prototype attribute #}
+<ul id="file-fields-list"
+    data-prototype="{{ form_widget(form.files.vars.prototype)|e }}"
+    data-widget-tags="{{ '<li></li>'|e }}">
+    {% for fileField in form.files %}
+        <li>
+            {{ form_errors(fileField) }}
+            {{ form_row(fileField) }}
+        </li>
+    {% endfor %}
+</ul>
+<button type="button"
+        class="add-another-collection-widget"
+        data-list="#file-fields-list">Add file</button>
+<button type="button"
+        class="remove-another-collection-widget"
+        data-list="#file-fields-list">Remove file</button>
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

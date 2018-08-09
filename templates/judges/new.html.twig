@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Judge{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>Enter new Judge</h1>
+
+    {{ include('judges/_form.html.twig') }}
+
+    <a href="{{ path('judges_index') }}">back to list</a>
+    </div>
+{% endblock %}

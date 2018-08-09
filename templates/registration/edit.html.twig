@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Registration{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form">
+
+    <h1>Edit Registration</h1>
+
+    {{ include('registration/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('registration_index') }}">back to list</a>
+
+    {{ include('registration/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,5 @@
+cspoo_swiftmailer_mailgun:
+    key: "key-xxxxxxxxxx"
+    domain: "mydomain.com"
+#    http_client: 'httplug.client'
+#    http_client: 'httplug.client.default'

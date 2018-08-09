@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Diploma index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>Diploma index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date of issue</th>
+                <th>Dog awarded</th>
+                <th>Show</th>
+                <th>Owner</th>
+                <th>actions</th>
+                <th>Delete</th>
+                <th>Generate pdf</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for diploma in diplomas %}
+            <tr>
+                <td>{{ diploma.id }}</td>
+                <td>{{ diploma.date ? diploma.date |date('Y-m-d') : '' }}</td>
+                {% if diploma.registration.dog.registeredName is defined %}
+                <td>{{ diploma.registration.dog.registeredName }}</td>
+                {% else %}
+                    <td>Not available</td>
+                    {% endif %}
+                {% if  diploma.registration.show.placeAndTime is defined %}
+                <td>{{ diploma.registration.show.placeAndTime }}</td>
+                {% else %}
+                    <td>Not available</td>
+                    {% endif %}
+                {% if diploma.registration.dog.owner.fullName is defined %}
+                <td>{{ diploma.registration.dog.owner.fullName }}</td>
+                {% else %}
+                    <td>Not avilable</td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('diploma_show', {'id': diploma.id}) }}">show</a>
+                    <a href="{{ path('diploma_edit', {'id': diploma.id}) }}">edit</a>
+                </td>
+                <td>
+                    {{ include('diploma/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a href="{{ path('diploma_pdf', {'id': diploma.id}) }}">Generate pdf</a>
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('registration_index')}}">Create new diploma</a>
+    </div>
+{% endblock %}

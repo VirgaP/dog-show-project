@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Judges{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+    <h1>Judge information</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ judge.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ judge.name }}</td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td>{{ judge.surname }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ judge.country }}</td>
+            </tr>
+        <tr>
+            <th>Shows</th>
+            {% for show in judge.shows %}
+                <td>{{ show.placeAndTime }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('judges_index') }}">go to list</a>
+    <hr>
+    <a href="{{ path('judges_edit', {'id': judge.id}) }}">edit</a>
+        <hr>
+
+    {{ include('judges/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

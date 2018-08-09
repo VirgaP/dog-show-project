@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dog{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<div class="table-responsive">
+    <h1>About {{ dog.registeredName |capitalize }}</h1>
+    <table class="records_list table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dog.id }}</td>
+            </tr>
+            <tr>
+                <th>Registered name</th>
+                <td>{{ dog.registeredName }}</td>
+            </tr>
+            <tr>
+                <th>Pedigree registration No</th>
+                <td>{{ dog.pedigreeRegNo }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ dog.sex }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ dog.color }}</td>
+            </tr>
+            <tr>
+                <th>Date of birth</th>
+                <td>{{ dog.dateOfBirth ? dog.dateOfBirth|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Titles</th>
+                <td>
+                    {% for title in dog.titles %}
+                        {{ title.name }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Chip/Tattoo No</th>
+                <td>{{ dog.chipTattooNo }}</td>
+            </tr>
+            <tr>
+                <th>Sire</th>
+                <td>{{ dog.sire }}</td>
+            </tr>
+            <tr>
+                <th>Dam</th>
+                <td>{{ dog.dam }}</td>
+            </tr>
+            <tr>
+                <th>Breeder</th>
+                <td>{{ dog.breeder }}</td>
+            </tr>
+            <tr>
+                <th>Name of the club</th>
+                <td>{{ dog.nameOfClub }}</td>
+            </tr>
+            <tr>
+                <th>Created at</th>
+                <td>{{ dog.createdAt ? dog.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            {#<tr>#}
+                {#<th> Dog files</th>#}
+                {#{% for file in dog.files %}#}
+                    {#<td><a href="{{ asset('uploads/images/' ~ file.fileName) }}">View file(s)</a></td>#}
+                    {#<td>{{ file.title }}</td>#}
+                {#{% endfor %}#}
+            {#</tr>#}
+        </tbody>
+    </table>
+
+
+    {% if is_granted ('ROLE_ADMIN') %}
+        <hr>
+    <a href="{{ path('dog_index') }}">back to list</a>
+    {% endif %}
+    <div class="container" style="display: inline">
+    <button class="btn btn-primary"><a style="color:white" href="{{ path('dog_edit', {'id': dog.id}) }}">Edit information</a></button> {{ include('dog/_delete_form.html.twig') }}
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

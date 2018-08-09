@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Show index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>List of shows</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateShow</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Judge</th>
+                <th>view/edit</th>
+                <th>Generate catalogue</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for show in shows %}
+            <tr>
+                <td>{{ show.id }}</td>
+                <td>{{ show.dateShow ? show.dateShow|date('Y-m-d') : '' }}</td>
+                <td>{{ show.city }}</td>
+                <td>{{ show.country }}</td>
+
+                    <td>{% for judge in show.judges %}
+                        {{ judge.fullName }}
+                {% endfor %}
+                    </td>
+                <td>
+                    <a href="{{ path('show_show', {'id': show.id}) }}">show</a>
+                    <a href="{{ path('show_edit', {'id': show.id}) }}">edit</a>
+                </td>
+                <td>
+                    <a href="{{ path('word_catalogue', {'show' : show.id}) }}">Generate catalogue</a>
+                </td>
+                <td>{{ include('show/_delete_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('show_new') }}">Create new</a>
+    </div>
+{% endblock %}

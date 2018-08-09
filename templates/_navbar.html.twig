@@ -1,0 +1,78 @@
+
+<!--begin header -->
+<header class="header">
+
+    <!--begin nav -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <!--begin container -->
+        <div class="container">
+
+            <!--begin navbar -->
+            <div class="navbar-header">
+
+                <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!--logo -->
+                <a href="https://sites.google.com/site/labmklt/home" class="navbar-brand" id="logo"><i class="fas fa-paw fa-3x "></i>  LABMK</a>
+
+            </div>
+
+            <div id="navbar-collapse-02" class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="{{ path('home') }}"><i class="fas fa-home"></i> Home</a></li>
+
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+                    {% endif %}
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-user-circle"></i> Profile</a></li>
+
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                    <li><a href="{{ path('easyadmin') }}">Admin area</a></li>
+                    {% endif %}
+
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('fos_user_security_login') }}"><i class="fas fa-user"></i>  Login</a></li>
+                    {% endif %}
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                        <li><a href="{{ path('logout') }}"><i class="fas fa-door-open"></i> Logout</a></li>
+                    {% endif %}
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('registration_new') }}" class="discover-btn">Register to show</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {#<a href="{{ path('pending_registrations_index') }}">Pending registrations#}
+                            {#{% if pending_registrations | length > 0 %}#}
+                                {#<span class="badge badge-pill badge-light">{{ pending_registrations | length}}</span>#}
+                            {#{% endif %}#}
+                        {% include 'new_items_count.html.twig'%}
+
+                        </a>
+                    {% endif %}
+                </ul>
+            </div>
+            <!--end navbar -->
+
+        </div>
+        <!--end container -->
+
+    </nav>
+    <!--end nav -->
+
+</header>
+<!--end header -->

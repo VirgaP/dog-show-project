@@ -1,0 +1,40 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.registered_name) }}
+{{ form_row(form.pedigree_reg_no) }}
+{{ form_row(form.sex) }}
+{{ form_row(form.color) }}
+{{ form_row(form.date_of_birth) }}
+{{ form_row(form.chip_tattoo_no) }}
+{{ form_row(form.sire) }}
+{{ form_row(form.dam) }}
+{{ form_row(form.breeder) }}
+{#{{ form_row(form.owner) }}#}
+{{ form_row(form.name_of_club) }}
+<hr>
+{{ form_label(form.titles) }}
+ {#store the prototype on the data-prototype attribute #}
+<ul id="title-fields-list"
+    data-prototype="{{ form_widget(form.titles.vars.prototype)|e }}"
+    data-widget-tags="{{ '<li></li>'|e }}">
+    {% for titleField in form.titles %}
+        <li>
+            {{ form_errors(titleField) }}
+            {{ form_row(titleField) }}
+        </li>
+    {% endfor %}
+</ul>
+    <button type="button"
+            class="add-another-collection-widget"
+            data-list="#title-fields-list">Add title</button>
+<button type="button"
+        class="remove-another-collection-widget"
+        data-list="#title-fields-list">Remove title</button>
+
+{{ form_row(form._token) }}
+
+{{ form_row(form.save) }}
+{#{{ form_widget(form.save, { 'label': 'Click me' }) }}#}
+{{ form_end(form, {'render_rest': false}) }}
+
+
+

@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+{{ form_label(form.titles) }}
+ {#store the prototype on the data-prototype attribute #}
+<ul id="title-fields-list"
+    data-prototype="{{ form_widget(form.titles.vars.prototype)|e }}"
+    data-widget-tags="{{ '<li></li>'|e }}">
+    {% for titleField in form.titles %}
+        <li>
+            {{ form_errors(titleField) }}
+            {{ form_row(titleField) }}
+        </li>
+    {% endfor %}
+</ul>
+
+
+<button type="button"
+        class="add-another-collection-widget"
+        data-list="#title-fields-list">Add title</button>
+<button type="button"
+        class="remove-another-collection-widget"
+        data-list="#title-fields-list">Remove title</button>
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

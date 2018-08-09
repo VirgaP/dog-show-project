@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New member{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>Enter new member information</h1>
+
+    {{ include('owner/_form.html.twig') }}
+
+    <a href="{{ path('dog_new') }}">Register your pet</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+#swiftmailer:
+##    disable_delivery: true
+#    url: '%env(MAILER_URL)%'
+swiftmailer:
+    url: '%env(MAILER_URL)%'
+    disable_delivery: true
+    spool:
+        type: 'file'
+        path: '%kernel.cache_dir%/email/spool'
+#swiftmailer:
+#    transport: "mailgun"
+#    spool:     { type: memory }

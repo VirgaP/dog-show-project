@@ -1,0 +1,180 @@
+<head>
+    <meta charset="utf-8">
+    <title>My PDF</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Roboto;
+    }
+    th, td{
+        border: 1px solid black;
+        text-align: left;
+        padding: 10px;
+        height: 40px;
+    }
+    #registration-dog-info th{
+        width: 30%;
+    }
+    #registration-dog-info td {
+        width: 70%;
+    }
+    #registration-dog-info {
+        border: #4e555b solid 1px;
+        margin: 20px 0 20px 0;
+    }
+    #classes {
+        margin: 20px 0 20px 0;
+    }
+
+    #classes th{
+        width: 30%;
+    }
+    #classes td {
+        width: 25%;
+    }
+
+    th {
+        text-transform: uppercase;
+        background-color: #5eb5e0;
+    }
+
+    td {
+        font-size: large;
+    }
+
+    footer{
+        position: fixed;
+        height: 80px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 0;
+        font-size: medium;
+        text-align: center;
+    }
+    body{
+        margin-bottom: 10px;
+    }
+
+</style>
+</head>
+
+<div class="container" style ="max-width: 850px;">
+    <header>
+        <img height="200" src="https://sites.google.com/site/labmklt/_/rsrc/1327487202318/config/customLogo.gif?revision=14"/>
+    </header>
+
+    <h1>Entry form</h1>
+    <div class="table-container">
+        <table class="table-show">
+            <thead>
+            <tr>
+                <th>Registration Id</th>
+                <th>Show date</th>
+                <th>Show Location</th>
+                <th>In catalogue</th>
+                <th>Registration date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ registration.id }}</td>
+                <td>{{ registration.show.dateShow ? registration.show.dateShow|date('Y-m-d') : ''}}</td>
+                <td>{{ registration.show.city }}, {{ registration.show.country }}</td>
+                <td>{{ registration.inCatalogue ? 'Yes':'No'  }}</td>
+                <td>{{ registration.createdAt ? registration.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <table id="classes">
+        <tr>
+            <th>Class in show</th>
+
+                <td>{{ registration.class.classTitle }}</td>
+
+        </tr>
+        <tr>
+            <th>Competition in show</th>
+            {% for competition in registration.competitions  %}
+                <td>{{ competition.competitionTitle }}</td>
+            {% endfor %}
+        </tr>
+    </table>
+
+    <table class="table" id="registration-dog-info">
+        <tr>
+            <th>Dog name</th>
+            <td>{{ registration.dog.registeredName | capitalize}}</td>
+        </tr>
+        <tr>
+            <th>Dogs pedigree number</th>
+            <td>{{ registration.dog.pedigreeRegNo}}</td>
+        </tr>
+        <tr>
+            <th>Dog's sex</th>
+            <td>{{ registration.dog.sex |capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Color</th>
+            <td>{{ registration.dog.color |capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Date of birth</th>
+            <td>{{ registration.dog.dateOfBirth ? registration.dog.dateOfBirth|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Titles</th>
+            <td>
+                {% for title in registration.dog.titles %}
+                {{ title.name }}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Chip/tattoo No</th>
+            <td>{{ registration.dog.chipTattooNo }}</td>
+        </tr>
+        <tr>
+            <th>Sire</th>
+            <td>{{ registration.dog.sire | capitalize}}</td>
+        </tr>
+        <tr>
+            <th>Dam</th>
+            <td>{{ registration.dog.dam | capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Breeder</th>
+            <td>{{ registration.dog.breeder | capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Name of club</th>
+            <td>{{ registration.dog.nameOfClub }}</td>
+        </tr>
+    </table>
+
+    <table class="table-owner">
+        <thead>
+        <tr>
+            <th>Owner Name and Surname</th>
+            <th>Phone</th>
+            {#<th>E-mail</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ registration.dog.owner.name | capitalize }} {{ registration.dog.owner.surname |capitalize }} </td>
+            <td>{{ registration.dog.owner.phone}}</td>
+            {#<td>{{ registration.dog.owner.email}}</td>#}
+        </tbody>
+    </table>
+
+
+{{ include('_pdffooter.html.twig') }}
+
+</div>
+
+

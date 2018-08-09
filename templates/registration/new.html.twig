@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Registration{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+    <h1>Register to show</h1>
+        <br>
+
+    {{ include('registration/_form.html.twig') }}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <hr>
+            <a href="{{ path('registration_index') }}">Go to registrations index</a>
+        {% endif %}
+        <hr>
+        <a href="{{ path('member_registration_index') }}">View your registrations</a>
+        <hr>
+    <hr>
+    <a href="{{ path('dog_new') }}">Register dog</a>
+    </div>
+{% endblock %}

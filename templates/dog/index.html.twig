@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dog index{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid symfony-form app-form dog-index">
+
+        <p>Type something in the input field to search the table for first names, last names or emails:</p>
+        <input id="myInput" type="text" placeholder="Search..">
+        <br><br>
+        <h1>Dog index</h1>
+
+        <table class="table" id="dogTable" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Registered name</th>
+                <th>Pedigree Reg. No</th>
+                <th class="visible-xs-block hidden-xs">Sex</th>
+                <th class="visible-xs-block hidden-xs" id="color">Color</th>
+                <th>Date of birth</th>
+                <th class="visible-xs-block hidden-xs" id="titles">Titles</th>
+                <th class="visible-xs-block hidden-xs" id="nom">Chip/tattoo No</th>
+                <th>Owner</th>
+                <th class="visible-xs-block hidden-xs" id="sire">Sire</th>
+                <th class="visible-xs-block hidden-xs" id="dam">Dam</th>
+                <th class="visible-xs-block hidden-xs" id ="breeder">Breeder</th>
+                <th class="visible-xs-block hidden-xs" id ="club">Name of the club</th>
+                <th class="visible-xs-block hidden-xs" id="date">Created at</th>
+                <th class="visible-xs-block hidden-xs" id="update">Updated  at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dog in dogs %}
+            <tr>
+                <td>{{ dog.id }}</td>
+                <td>{{ dog.registeredName }}</td>
+                <td>{{ dog.pedigreeRegNo }}</td>
+                <td class="visible-xs-block hidden-xs visible-sm-block hidden-sm">{{ dog.sex }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.color }}</td>
+                <td>{{ dog.dateOfBirth ? dog.dateOfBirth|date('Y-m-d') : '' }}</td>
+                <td class="visible-xs-block hidden-xs">
+                    {% for title in dog.titles %}
+                        {{ title.name }}
+                    {% endfor %}
+                </td>
+                <td class="visible-xs-block hidden-xs visible-sm-block hidden-sm">{{ dog.chipTattooNo }}</td>
+                <td>{{ dog.owner.fullName }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.sire }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.dam }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.breeder }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.nameOfClub }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.createdAt ? dog.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="visible-xs-block hidden-xs">{{ dog.updatedAt ? dog.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('dog_show', {'id': dog.id}) }}">show</a>
+                    <a href="{{ path('dog_edit', {'id': dog.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        {% include 'dog/pagination.html.twig' with {'maxPages': maxPages, 'thisPage': currentPage, 'routeName': routeName} %}
+        <hr>
+        <button class="btn btn-primary"><a style="color:whitesmoke" href="{{ path('dog_new') }}">Create new entry</a></button>
+    </div>
+
+{% endblock %}

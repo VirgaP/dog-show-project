@@ -1,0 +1,155 @@
+easy_admin:
+    site_name: 'LABMK admin'
+    design:
+        menu:
+            - { entity: 'Home', route: 'home' }
+            - { entity: 'Post', route: 'post' }
+
+            - label: 'Registration to show'
+              icon: 'files'
+              children:
+                - { label: 'New entry', icon: 'file-new', route: 'registration_new' }
+                - { label: 'Entries list', icon: 'file-list', route: 'registration_index'  }
+#            - label: 'Public Homepage'
+#              icon: 'house'
+#              children:
+#                - { label: 'Edit Homepage', route: 'home_new' }
+#            - { label: 'Entries to show', route: 'registration_index' }
+            - label: 'Files list'
+              children:
+                - { label: 'View files', icon: 'file', route: 'file_index' }
+            - { label: 'Register new dog', route: 'dog_new' }
+            - { entity: 'User', target: '_self' }
+            - { entity: 'Dog', target: '_self'  }
+            - { entity: 'Owner', target: '_self' }
+            - { entity: 'Show', target: '_self' }
+            - { entity: 'ShowClass', target: '_self' }
+            - { entity: 'Competition', target: '_self' }
+            - { entity: 'Judges', target: '_self' }
+            - { entity: 'Registration', target: '_parent' }
+
+    list:
+        max_results: 20
+        actions:
+            - { name: 'show', icon: 'info-circle', label: 'show', title: 'Search' }
+            - { name: 'edit', icon: 'pencil', label: 'edit', title: 'Edit' }
+            - { name: 'delete', icon: 'trash', label: 'delete', title: 'Delete' }
+    edit:
+        title: '%%entity_label%%_edit'
+    new:
+        title: 'New %%entity_label%%'
+
+    entities:
+        Home:
+            class: App\Entity\Home
+            label: 'Edit homepage information'
+            form:
+                fields:
+                   - { property: 'heading', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', type_options: { trim: true } }
+                   - { property: 'text', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType'}
+        Post:
+            class: App\Entity\Post
+            label: 'Create post'
+            form:
+                fields:
+                   - { property: 'title' }
+                   - { property: 'content', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType'}
+
+        Dog:
+            class: App\Entity\Dog
+            disabled_actions: ['new']
+            label: 'Dogs'
+            list:
+                title: "Dogs listing"
+#                max_results: 20
+
+        Owner:
+            class: App\Entity\Owner
+            disabled_actions: ['new']
+            label: 'Owners'
+            list:
+                title: "Owners listing"
+                max_results: 20
+
+        Registration:
+            class: App\Entity\Registration
+            disabled_actions: ['new']
+            label: 'Entries to show'
+            list:
+                title: "Entries listing"
+                max_results: 20
+
+        Show:
+            class: App\Entity\Show
+            new:
+                title:  'Add show'
+                form_options: { validation_groups: ['Default', 'Show'] }
+            edit:
+                title:  'Edit show'
+                form_options: { validation_groups: ['Default'] }
+            label: 'Shows'
+            list:
+                title: "Shows listing"
+
+        ShowClass:
+            class: App\Entity\ShowClass
+            label: 'Classes in show'
+            list:
+                title: "Classes listing"
+
+        Competition:
+            class: App\Entity\Competition
+            label: 'Competitions in show'
+            list:
+                title: "Competitions listing"
+        Judges:
+            class: App\Entity\Judges
+            label: 'Judges'
+#            form:
+#                fields:
+#                    - name
+#                    - surname
+#                    - country
+#                    # if administrators are allowed to edit users' passwords and roles, add this:
+#                    - { property: 'shows', type: 'easyadmin_autocomplete'}
+
+        User:
+            class: App\Entity\User
+            label: 'Users'
+            form:
+                fields:
+                    # if administrators are allowed to edit users' passwords and roles, add this:
+                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            edit:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - roles
+                   # ...
+                    - { property: 'plainPassword', type_options: { required: false} }
+                    # ...
+                form_options: { validation_groups: ['Profile'] }
+            new:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - roles
+                 # ...
+                    - { property: 'plainPassword', type_options: { required: true} }
+                    # ...
+                form_options: { validation_groups: ['Registration'] }
+        Image:
+            class: App\Entity\Image
+
+#            disabled_actions: ['edit', 'new']
+#            label: 'Files'
+#            list:
+#                title: "List of files"
+#                fields:
+#                    - id
+#                    - title
+#                    - fileName
+#                    - { property: 'file', label: 'File avatar', type: 'file', base_path: 'image_directory', sortable: false }

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form">
+        <h1>List of entries received</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Show</th>
+                <th>Owner</th>
+                <th>Dog in show</th>
+                <th>View details</th>
+                <th>Delete</th>
+                <th>Status</th>
+                <th>Confirm registration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for registration in registrations %}
+                <tr>
+                    <td>{{ registration.id }}</td>
+                    <td>{{ registration.createdAt ? registration.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    {% if registration.show.city is defined %}
+                        <td>{{ registration.show.city }}, {{ registration.show.dateShow ? registration.show.dateShow|date('Y-m-d') : ''}}</td>
+                    {% endif %}
+                    {% if  registration.dog.owner.name is defined%}
+                        <td>{{ registration.dog.owner.name }} {{ registration.dog.owner.surname }} </td>
+                    {% endif %}
+                    {% if registration.dog %}
+                        <td>{{ registration.dog.registeredName | capitalize}}</td>
+                    {% endif %}
+                    <td>
+                        <button><a href="{{ path('registration_show', {'id': registration.id}) }}">View</a></button>
+                    </td>
+                    <td>{{ include('registration/_delete_form.html.twig') }}</td>
+                    <td>{{ registration.isConfirmed ? 'Confirmed' : 'Pending' }}</td>
+                    <td>
+                        <a href="{{ path('registration_confirm', {'id' : registration.id}) }}">Confirm</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('registration_new') }}">Create new entry</a>
+    </div>
+{% endblock %}

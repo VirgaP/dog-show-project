@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Judges index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+<h1>Index of Judges in shows</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Country</th>
+                <th>Show</th>
+                <th>View/Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for judge in judges %}
+            <tr>
+                <td>{{ judge.id }}</td>
+                <td>{{ judge.name }}</td>
+                <td>{{ judge.surname }}</td>
+                <td>{{ judge.country }}</td>
+                {% if  judge.shows is defined%}
+                {% for show in judge.shows %}
+                <td>{{ show.placeAndTime }}</td>
+                {% endfor %}
+                {% endif %}
+                <td>
+                    <a href="{{ path('judges_show', {'id': judge.id}) }}">view</a>
+                    <a href="{{ path('judges_edit', {'id': judge.id}) }}">edit</a>
+                </td>
+                <td> {{ include('judges/_delete_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('judges_new') }}">Create new</a>
+    </div>
+{% endblock %}

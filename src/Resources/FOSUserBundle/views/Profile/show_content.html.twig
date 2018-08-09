@@ -1,0 +1,108 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container profile-box">
+    <div class="row">
+        <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+
+            <a href="{{ path('logout') }}">Logout</a>
+        <br>
+            <p class=" text-info">{{ "now"|date()  }}</p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ user.username }}</h3>
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://tavogyvunas.lt/wp-content/uploads/2018/01/Lietuvos-angl%C5%B3-buldog%C5%B3-myl%C4%97toj%C5%B3-klubas.png" class="img-circle img-responsive"> </div>
+
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                       <a href="{{ path('pending_registrations_index') }}">Pending registrations
+                                            {% if pending_registrations | length > 0 %}
+                                                <td><span class="badge badge-pill badge-light">{{ pending_registrations | length}}</span>
+                                                </td>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    {% if user.owner.id is defined %}
+                                    <td>{{ user.owner.phone }}</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    {% if user.owner.id is defined %}
+                                    <td>{{ user.owner.address }} {{ user.owner.city }}</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>Profile created:</td>
+                                    {% if user.owner.id is defined %}
+                                    <td>{{ user.owner.createdAt ? user.owner.createdAt|date('Y-m-d') : '' }}</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                <td>Registered dogs</td>
+                                    {% if user.owner.id is defined %}
+                                {% for dog in user.owner.dogs %}
+                                    <td><a href="{{ path('dog_show', {'id': dog.id}) }}">{{ dog.registeredName }}</a>
+                                        </td>
+                                {% endfor %}
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                <td>Entries to show</td>
+                                    {% if user.owner.id is defined %}
+                                    {% for dog in user.owner.dogs %}
+
+                                        {% for registration in dog.registrations %}
+                                            {% if  registration.show.dateShow < "now"|date() %}
+                                <td>{{registration.dog.registeredName  }} -  {{ registration.show.placeAndTime }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                {% endfor %}
+                                    {% endif %}
+                                </tr>
+                                {% if user.owner.id is defined %}
+                                <tr>
+                                    <td><a href="{{ path('member_registration_index') }}">View all entries to shows</a></td>
+                                </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                            {% if user.owner.id is not defined %}
+                            <a href="{{ path('member_registration') }}" class="btn btn-primary">Member details</a>
+                            {% endif %}
+                            <a href="{{ path('dog_new') }}" class="btn btn-primary">Enter you pet's information</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                    <span class="pull-right">
+                        {% if user.owner.id is defined %}
+                            <a href="{{ path('member_edit', {'id': user.owner.id}) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-user"></i></a>
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

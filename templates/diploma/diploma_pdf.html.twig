@@ -1,0 +1,160 @@
+<head>
+    <meta charset="utf-8">
+    <title>Diploma pdf</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+        .container {
+            margin-left:40px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td{
+            border: 1px solid grey;
+            text-align: left;
+            height: 40px;
+        }
+
+        footer{
+            position: fixed;
+            height: 80px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: 0;
+            font-size: medium;
+            text-align: center;
+        }
+        body{
+            margin-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+            padding-top: 30px;
+            font-size: 50px;
+        }
+
+        #results td {
+            padding: 20px;
+            font-size:20px;
+        }
+        #titles td{
+            padding: 15px;
+        }
+        #cell-1 {
+            width: 20%;
+        }
+        #cell-2{
+            width:45%
+        }
+        #cell-3 {
+            width: 15%
+        }
+        #cell-5, #cell-7, #cell-9 {
+            width:30%;
+        }
+        #cell-8 {
+            font-size: x-large;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+
+<div class="container" style ="max-width: 920px;">
+    <header>
+        <img height="200" src="https://sites.google.com/site/labmklt/_/rsrc/1327487202318/config/customLogo.gif?revision=14"/>
+    </header>
+
+    <h1>DIPLOMAS</h1>
+    <div class="table-container">
+            <div id="show-name" style="text-align: center; font-size: 21px; line-height: 150%">{{ diploma.registration.show.showName | upper }}</div>
+            <br>
+            <div id ="show-city" style="text-align: center; font-size: 25px">{{ diploma.registration.show.city | capitalize }}</div>
+            <hr>
+            <div id="show-date" style="text-align: center; font-size: 25px; padding-bottom: 40px">({{ diploma.registration.show.dateShow ? diploma.registration.show.dateShow|date('Y-m-d') : '' }})</div>
+        <table class="table-show">
+            <tbody>
+            <tr>
+                <td style="font-size: 20px; padding: 10px; width:35%;">Anglų buldogas (Bulldog)</td>
+                <td style="font-size: 35px;text-align: center; padding: 10px;">{{ diploma.registration.dog.registeredName | upper}}</td>
+            </tr>
+            <tr>
+                <td style="font-size: 20px; padding: 10px">Katalogo Nr. / Catalogue No. :</td>
+                <td style="font-size: 20px;text-align: center; padding: 10px;">23</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; font-size: 25px; text-align: center">{{ diploma.registration.dog.pedigreeRegNo }}</td>
+                <td style="font-size: 25px; padding: 10px; text-align: center">{{ diploma.registration.dog.owner.name | capitalize }} {{ diploma.registration.dog.owner.surname |capitalize }} </td>
+            </tr>
+            <td style="padding: 10px; text-align: center">Registracijos nr. / Pedigree No.</td>
+            <td style="padding: 10px; text-align: center">Savininkas / Owner</td>
+            </tbody>
+        </table>
+            <table id="dog-info">
+                <tbody>
+                <tr>
+                    <td style="padding: 10px; font-size: 25px; text-align: center">{{ diploma.registration.dog.dateOfBirth ? diploma.registration.dog.dateOfBirth|date('Y-m-d') : '' }}</td>
+                    <td style="padding: 10px; font-size: 25px;text-align: center">{{diploma.registration.dog.sex  }}</td>
+                    {% if diploma.registration.class.classTitle is defined %}
+                    <td style="padding: 10px; font-size: 25px;text-align: center">{{ diploma.registration.class.classTitle }}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: center">Gimimo data / DOB</td>
+                    <td style="padding: 10px; text-align: center">Lytis / Sex</td>
+                    <td style="padding: 10px; text-align: center">Klasė / Class</td>
+                </tr>
+                </tbody>
+            </table>
+        </table>
+        <table id="results">
+            <tbody>
+            <tr>
+                <td id="cell-1">Įvertinimas / Evaluation: </td>
+                {% if  diploma.result.grade is defined %}
+                    <td id="cell-2">{{ diploma.result.grade }}</td>
+                {% else %}
+                    <td id="cell-2"></td>
+                {% endif %}
+                <td id="cell-3">Vieta / Place: </td>
+                {% if  diploma.result.place is defined %}
+                    <td id="cell-4">{{ diploma.result.place }}</td>
+                {% else %}
+                    <td id="cell-4"></td>
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+        <table id="titles" >
+            <tbody>
+            <tr>
+                <td id="cell-5"> Titulai / Titles: </td>
+               <td id="cell-6"></td>
+            </tr>
+            <tr>
+                <td id="cell-7"> Teisėjas / Judge: </td>
+                <td id="cell-8"> {% for judge in diploma.registration.show.judges %}
+                    {{ judge.fullName }} |
+                {% endfor %}</td>
+            </tr>
+            <tr>
+                <td id="cell-9">Asistentas / Ring steward:</td>
+                <td id="cell-10"> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    {{ include('_pdffooter.html.twig') }}
+
+</div>
+
+

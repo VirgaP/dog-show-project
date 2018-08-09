@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Judges{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form app-form">
+
+    <h1>Edit Judge information</h1>
+
+    {{ include('judges/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('judges_index') }}">back to list</a>
+
+    {{ include('judges/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

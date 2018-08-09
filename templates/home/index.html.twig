@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block navbar%}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    {{ include ('home/_hero_layout.html.twig') }}
+    {{  include ('home/_sponsors_section.html.twig')}}
+    {{ include('home/_posts_section.html.twig') }}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+
+

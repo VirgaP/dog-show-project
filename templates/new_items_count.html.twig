@@ -1,0 +1,5 @@
+<a href="{{ path('pending_registrations_index') }}">New entries
+    {% if pending_registrations | length > 0 %}
+        <span class="badge badge-pill badge-light">{{ pending_registrations | length }}</span>
+    {% endif %}
+</a>

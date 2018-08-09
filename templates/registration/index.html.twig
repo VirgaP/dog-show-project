@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid symfony-form registration-index">
+    <h1>Entries to show</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Show</th>
+                <th>Owner</th>
+                <th>Dog in show</th>
+                <th>actions</th>
+                <th visible-sm-block hidden-sm>Delete</th>
+                {% if is_granted ('ROLE_ADMIN') %}
+                <th>Add diploma</th>
+                <th>Generate card</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for registration in registrations %}
+            <tr>
+                <td>{{ registration.id }}</td>
+                <td>{{ registration.createdAt ? registration.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ registration.isConfirmed ? 'Confirmed' : 'Pending' }}</td>
+                {% if registration.show.city is defined %}
+                <td>{{ registration.show.city }}, {{ registration.show.dateShow ? registration.show.dateShow|date('Y-m-d') : ''}}</td>
+                {% endif %}
+                {% if  registration.dog.owner.name is defined%}
+                <td>{{ registration.dog.owner.name }} {{ registration.dog.owner.surname }} </td>
+                {% endif %}
+                {% if registration.dog %}
+                <td>{{ registration.dog.registeredName | capitalize}}</td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('registration_show', {'id': registration.id}) }}">show</a>
+                    <a href="{{ path('registration_edit', {'id': registration.id}) }}">edit</a>
+                </td>
+                <td visible-sm-block hidden-sm>{{ include('registration/_delete_form.html.twig') }}</td>
+                {% if is_granted ('ROLE_ADMIN') %}
+                <td>
+                    <a href="{{ path('diploma_new', {'registration' : registration.id}) }}">add diploma</a>
+                </td>
+                {% endif %}
+                {% if is_granted ('ROLE_ADMIN') %}
+                <td>
+                    <a href="{{ path('card_pdf', {'id' : registration.id}) }}">Generate card</a>
+                </td>
+                {% endif %}
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        {% include 'registration/pagination.html.twig' with {'maxPages': maxPages, 'thisPage': currentPage, 'routeName': routeName} %}
+        <hr>
+
+    <a href="{{ path('registration_new') }}">Create new entry</a>
+</div>
+{% endblock %}

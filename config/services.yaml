@@ -1,0 +1,85 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    images_directory: '%kernel.project_dir%/public%image_path%'
+    image_path: '/uploads/images/'
+
+    mailer_transport: smtp
+    mailer_host: mailtrap.io
+    mailer_user: 3708bc2d54e01b
+    mailer_password: c42b8bbb9d73e0
+    mailer_auth_mode: cram-md5
+    mailer_port: 2525
+    mailer_noreply:
+        - noreply@mydomain.com
+
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\EventListener\SomeEventListener:
+        tags:
+            - {name: kernel.event_listener, event: page.loaded}
+
+#    App\EventListener\FileUploadListener:
+#        tags:
+#            - { name: doctrine.event_listener, event: prePersist }
+#            - { name: doctrine.event_listener, event: preUpdate }
+#
+    App\EventListener\RegistrationConfirmationNotificationSubscriber:
+        tags:
+            - { name: registration.confirmed, event: onRegistrationConfirmed }
+        arguments: ['@mailer', '@templating']
+
+
+    App\EventListener\RegistrationListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\Services\FileUploader:
+        arguments:
+            $targetDirectory: '%images_directory%'
+
+
+    App\Validation\UniqueDogInShowValidator:
+#        arguments: ['@show.repository']
+        tags:
+            - {name: validator.constraint_validator}
+
+    redirect.after.login:
+            class: App\Users\UsersBundle\Redirection\AfterLoginRedirection
+            arguments: ['@router','@security.authorization_checker']
+
+#    registration_mailer.mailer:
+#        class: App\Mailer\RegistrationMailer
+#        arguments:
+#            - @mailer
+#            - @templating
+#            - @logger
+#            - %mailer_noreply%
+
+#    App\Validation\UniqueDogInShowValidator
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
